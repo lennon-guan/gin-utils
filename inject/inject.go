@@ -8,6 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// AddInjector registers a constructor function for type T in the dependency injection system.
+// f: A constructor function that returns an instance of type T.
 func AddInjector[T any](f func() T) {
 	var v T
 	injectTypeMap[reflect.TypeOf(v)] = f
@@ -19,10 +21,16 @@ type closerWithoutReturnError interface {
 	Close()
 }
 
+// Wrap wraps a handler function that takes *gin.Context and an argument of type T1.
+// f: A handler function that takes *gin.Context and an argument of type T1.
 func Wrap[T1 any](f func(*gin.Context, T1)) func(*gin.Context) {
 	return Wrap1(f)
 }
 
+// processArg retrieves and generates an instance of type T, while also returning an appropriate closer function.
+// Returns:
+// - getter: A function that generates an instance of type T.
+// - closer: A function used to close the generated instance.
 func processArg[T any]() (getter func() T, closer func(any)) {
 	var v T
 	vt := reflect.TypeOf(v)
@@ -42,12 +50,18 @@ func processArg[T any]() (getter func() T, closer func(any)) {
 	return
 }
 
+// closeIoCloser closes an instance that implements the io.Closer interface.
+// v: The instance to be closed.
 func closeIoCloser(v any) {
 	v.(io.Closer).Close()
 }
 
+// closeCloserWithoutReturnError closes an instance that implements the closerWithoutReturnError interface.
+// v: The instance to be closed.
 func closeCloserWithoutReturnError(v any) {
 	v.(closerWithoutReturnError).Close()
 }
 
+// closeNoop is a no-op close function that does nothing to the provided instance.
+// any: The parameter for no-op.
 func closeNoop(any) {}
