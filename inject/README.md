@@ -1,7 +1,11 @@
 # inject
 
-inject是一个简易的gin.HandlerFunc的依赖注入工具。只要在注册HandlerFunc前通过inject.AddInjector函数注册过特定类型的注入函数，即可在绑定路由的时候通过HandlerFunc的参数注入期望的值
+[中文版](README_cn.md)
 
-另外，如果注入的类型实现了io.Closer，或者自身有一个无返回值的.Close()方法，在HandlerFunc退出的时候，会自动执行其Close()方法
+inject is a simple dependency injection tool for gin.HandlerFunc. By registering specific types of injection functions using the inject.AddInjector function before registering the HandlerFunc, you can inject the desired values through the parameters of the HandlerFunc when binding routes.
 
-具体用法可以参考examples里面的代码
+
+Additionally, if the injected type implements io.Closer or has its own .Close() method without a return value, the Close() method will be automatically executed when the HandlerFunc exits.
+
+
+For specific usage, you can refer to the code in the examples directory.
