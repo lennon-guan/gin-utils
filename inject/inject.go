@@ -45,7 +45,7 @@ func processArg[T any]() (getter func() T, closer func(any)) {
 	case closerWithoutReturnError:
 		closer = closeCloserWithoutReturnError
 	default:
-		closer = closeNoop
+		closer = nil
 	}
 	return
 }
@@ -61,7 +61,3 @@ func closeIoCloser(v any) {
 func closeCloserWithoutReturnError(v any) {
 	v.(closerWithoutReturnError).Close()
 }
-
-// closeNoop is a no-op close function that does nothing to the provided instance.
-// any: The parameter for no-op.
-func closeNoop(any) {}

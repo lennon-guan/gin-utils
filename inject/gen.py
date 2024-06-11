@@ -12,7 +12,9 @@ def gen_n(n, writer):
     writer.write('\treturn func(c *gin.Context) {\n')
     for i in range(n):
         writer.write('\t\tv{i} := getter{i}()\n'.format(i=i+1))
-        writer.write('\t\tdefer closer{i}(v{i})\n'.format(i=i+1))
+        writer.write('\t\tif closer{i} != nil {{\n'.format(i=i+1))
+        writer.write('\t\t\tdefer closer{i}(v{i})\n'.format(i=i+1))
+        writer.write('\t\t}\n')
     writer.write('\t\tf(c')
     for i in range(n):
         writer.write(', v{i}'.format(i=i+1))

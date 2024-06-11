@@ -15,23 +15,41 @@ func Wrap9[T1, T2, T3, T4, T5, T6, T7, T8, T9 any](f func(*gin.Context, T1, T2, 
 	getter9, closer9 := processArg[T9]()
 	return func(c *gin.Context) {
 		v1 := getter1()
-		defer closer1(v1)
+		if closer1 != nil {
+			defer closer1(v1)
+		}
 		v2 := getter2()
-		defer closer2(v2)
+		if closer2 != nil {
+			defer closer2(v2)
+		}
 		v3 := getter3()
-		defer closer3(v3)
+		if closer3 != nil {
+			defer closer3(v3)
+		}
 		v4 := getter4()
-		defer closer4(v4)
+		if closer4 != nil {
+			defer closer4(v4)
+		}
 		v5 := getter5()
-		defer closer5(v5)
+		if closer5 != nil {
+			defer closer5(v5)
+		}
 		v6 := getter6()
-		defer closer6(v6)
+		if closer6 != nil {
+			defer closer6(v6)
+		}
 		v7 := getter7()
-		defer closer7(v7)
+		if closer7 != nil {
+			defer closer7(v7)
+		}
 		v8 := getter8()
-		defer closer8(v8)
+		if closer8 != nil {
+			defer closer8(v8)
+		}
 		v9 := getter9()
-		defer closer9(v9)
+		if closer9 != nil {
+			defer closer9(v9)
+		}
 		f(c, v1, v2, v3, v4, v5, v6, v7, v8, v9)
 	}
 }
