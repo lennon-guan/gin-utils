@@ -11,7 +11,7 @@ def gen_n(n, writer):
         writer.write('\tgetter{i}, closer{i} := processArg[T{i}]()\n'.format(i=i+1))
     writer.write('\treturn func(c *gin.Context) {\n')
     for i in range(n):
-        writer.write('\t\tv{i} := getter{i}()\n'.format(i=i+1))
+        writer.write('\t\tv{i} := getter{i}(c)\n'.format(i=i+1))
         writer.write('\t\tif closer{i} != nil {{\n'.format(i=i+1))
         writer.write('\t\t\tdefer closer{i}(v{i})\n'.format(i=i+1))
         writer.write('\t\t}\n')

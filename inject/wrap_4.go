@@ -9,19 +9,19 @@ func Wrap4[T1, T2, T3, T4 any](f func(*gin.Context, T1, T2, T3, T4)) func(*gin.C
 	getter3, closer3 := processArg[T3]()
 	getter4, closer4 := processArg[T4]()
 	return func(c *gin.Context) {
-		v1 := getter1()
+		v1 := getter1(c)
 		if closer1 != nil {
 			defer closer1(v1)
 		}
-		v2 := getter2()
+		v2 := getter2(c)
 		if closer2 != nil {
 			defer closer2(v2)
 		}
-		v3 := getter3()
+		v3 := getter3(c)
 		if closer3 != nil {
 			defer closer3(v3)
 		}
-		v4 := getter4()
+		v4 := getter4(c)
 		if closer4 != nil {
 			defer closer4(v4)
 		}

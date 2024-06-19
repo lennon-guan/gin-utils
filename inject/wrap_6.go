@@ -11,27 +11,27 @@ func Wrap6[T1, T2, T3, T4, T5, T6 any](f func(*gin.Context, T1, T2, T3, T4, T5, 
 	getter5, closer5 := processArg[T5]()
 	getter6, closer6 := processArg[T6]()
 	return func(c *gin.Context) {
-		v1 := getter1()
+		v1 := getter1(c)
 		if closer1 != nil {
 			defer closer1(v1)
 		}
-		v2 := getter2()
+		v2 := getter2(c)
 		if closer2 != nil {
 			defer closer2(v2)
 		}
-		v3 := getter3()
+		v3 := getter3(c)
 		if closer3 != nil {
 			defer closer3(v3)
 		}
-		v4 := getter4()
+		v4 := getter4(c)
 		if closer4 != nil {
 			defer closer4(v4)
 		}
-		v5 := getter5()
+		v5 := getter5(c)
 		if closer5 != nil {
 			defer closer5(v5)
 		}
-		v6 := getter6()
+		v6 := getter6(c)
 		if closer6 != nil {
 			defer closer6(v6)
 		}

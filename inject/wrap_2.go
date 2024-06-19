@@ -7,11 +7,11 @@ func Wrap2[T1, T2 any](f func(*gin.Context, T1, T2)) func(*gin.Context) {
 	getter1, closer1 := processArg[T1]()
 	getter2, closer2 := processArg[T2]()
 	return func(c *gin.Context) {
-		v1 := getter1()
+		v1 := getter1(c)
 		if closer1 != nil {
 			defer closer1(v1)
 		}
-		v2 := getter2()
+		v2 := getter2(c)
 		if closer2 != nil {
 			defer closer2(v2)
 		}

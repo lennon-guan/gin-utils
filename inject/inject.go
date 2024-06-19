@@ -8,9 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type InjectFunc[T any] func(*gin.Context) T
+
 // AddInjector registers a constructor function for type T in the dependency injection system.
 // f: A constructor function that returns an instance of type T.
-func AddInjector[T any](f func() T) {
+func AddInjector[T any](f InjectFunc[T]) {
 	var v T
 	injectTypeMap[reflect.TypeOf(v)] = f
 }
@@ -31,10 +33,10 @@ func Wrap[T1 any](f func(*gin.Context, T1)) func(*gin.Context) {
 // Returns:
 // - getter: A function that generates an instance of type T.
 // - closer: A function used to close the generated instance.
-func processArg[T any]() (getter func() T, closer func(any)) {
+func processArg[T any]() (getter InjectFunc[T], closer func(any)) {
 	var v T
 	vt := reflect.TypeOf(v)
-	getter, is := injectTypeMap[vt].(func() T)
+	getter, is := injectTypeMap[vt].(InjectFunc[T])
 	if !is {
 		panic(fmt.Sprintf("inject type %s not registered", vt))
 	}

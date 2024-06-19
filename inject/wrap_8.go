@@ -13,35 +13,35 @@ func Wrap8[T1, T2, T3, T4, T5, T6, T7, T8 any](f func(*gin.Context, T1, T2, T3, 
 	getter7, closer7 := processArg[T7]()
 	getter8, closer8 := processArg[T8]()
 	return func(c *gin.Context) {
-		v1 := getter1()
+		v1 := getter1(c)
 		if closer1 != nil {
 			defer closer1(v1)
 		}
-		v2 := getter2()
+		v2 := getter2(c)
 		if closer2 != nil {
 			defer closer2(v2)
 		}
-		v3 := getter3()
+		v3 := getter3(c)
 		if closer3 != nil {
 			defer closer3(v3)
 		}
-		v4 := getter4()
+		v4 := getter4(c)
 		if closer4 != nil {
 			defer closer4(v4)
 		}
-		v5 := getter5()
+		v5 := getter5(c)
 		if closer5 != nil {
 			defer closer5(v5)
 		}
-		v6 := getter6()
+		v6 := getter6(c)
 		if closer6 != nil {
 			defer closer6(v6)
 		}
-		v7 := getter7()
+		v7 := getter7(c)
 		if closer7 != nil {
 			defer closer7(v7)
 		}
-		v8 := getter8()
+		v8 := getter8(c)
 		if closer8 != nil {
 			defer closer8(v8)
 		}
